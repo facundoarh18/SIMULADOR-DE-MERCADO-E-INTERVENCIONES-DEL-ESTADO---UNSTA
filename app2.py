@@ -110,7 +110,7 @@ if datos_validos:
     # Obtener equilibrio inicial base
     eq_base = resolver_mercado(a, b, c, d)
     
-    tab1, tab2, tab3 = st.tabs(["📈 Mercado Competitivo & Elasticidad", "🏛️ Intervenciones del Estado"])
+    tab1, tab2 = st.tabs(["📈 Mercado Competitivo & Elasticidad", "🏛️ Intervenciones del Estado"])
     
     # ---------------------------------------------------------
     # TAB 1: MERCADO COMPETITIVO Y ELASTICIDAD (Módulo 1 y 2)
