@@ -110,7 +110,7 @@ if datos_validos:
     # Obtener equilibrio inicial base
     eq_base = resolver_mercado(a, b, c, d)
     
-    tab1, tab2, tab3 = st.tabs(["📈 Mercado Competitivo & Elasticidad", "🏛️ Intervenciones del Estado", "📑 Guía Analítica"])
+    tab1, tab2, tab3 = st.tabs(["📈 Mercado Competitivo & Elasticidad", "🏛️ Intervenciones del Estado"])
     
     # ---------------------------------------------------------
     # TAB 1: MERCADO COMPETITIVO Y ELASTICIDAD (Módulo 1 y 2)
@@ -330,19 +330,6 @@ if datos_validos:
             fig2.update_layout(title=f"Visualización de Efectos: {tipo_intervencion}", xaxis_title="Cantidad", yaxis_title="Precio",
                               xaxis=dict(range=[0, float(a * 1.1)]), yaxis=dict(range=[0, float(p_max_g * 1.1)]))
             st.plotly_chart(fig2, use_container_width=True)
-
-    # ---------------------------------------------------------
-    # TAB 3: PARTE ANALÍTICA (Módulo 7)
-    # ---------------------------------------------------------
-    with tab3:
-        st.header("📝 Marco Teórico y Preguntas del Informe (Parte Analítica)")
-        st.markdown("""
-        Cada grupo debe complementar esta herramienta de software con el correspondiente análisis microeconómico. Guiarse por las siguientes pautas conceptuales:
-        
-        * **¿Quién gana y quién pierde?:** Las fijaciones de precios máximos intentan beneficiar al consumidor pero generan mercados negros y escasez crónica. Los precios mínimos protegen a productores (como salarios mínimos o agro), pero destruyen eficiencia generando sobreproducción líquida.
-        * **Rol Clave de la Elasticidad:** Aquel lado del mercado que sea más **inelástico** (curva con pendiente más empinada o rígida) tiene menor capacidad de reacción y, en consecuencia, terminará soportando una proporción mayor de la carga fiscal de cualquier impuesto, independientemente de quién esté obligado a pagarlo legalmente.
-        * **Traslado del Impuesto:** Si la demanda es perfectamente inelástica, el vendedor traslada el 100% del impuesto al consumidor vía aumentos de precios sin perder volumen de ventas.
-        """)
 
 # --- CÓMO EJECUTAR EL SIMULADOR ---
 # Guarda este código en un archivo llamado `app.py`
