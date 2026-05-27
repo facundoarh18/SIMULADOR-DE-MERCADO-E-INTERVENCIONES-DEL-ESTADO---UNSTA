@@ -189,7 +189,7 @@ if datos_validos:
                               xaxis=dict(range=[0, float(a * 1.1)]), yaxis=dict(range=[0, float(p_max_graf * 1.1)]))
             st.plotly_chart(fig1, use_container_width=True)
 
-    # ---------------------------------------------------------
+# ---------------------------------------------------------
     # TAB 2: INTERVENCIONES DEL ESTADO (Módulo 3)
     # ---------------------------------------------------------
     with tab2:
@@ -226,7 +226,6 @@ if datos_validos:
         with col_res:
             st.subheader("Panel de resultados")
             
-            # Tabla interactiva requerida (Requerimiento de Interfaz - Sección 6)
             tabla_datos = [
                 {"Variable": "Precio equilibrio inicial", "Valor": f"${eq_base['P_eq']}"},
                 {"Variable": "Cantidad equilibrio inicial", "Valor": f"{eq_base['Q_eq']} u."}
@@ -277,7 +276,7 @@ if datos_validos:
                 tabla_datos.append({"Variable": "Nueva cantidad de mercado", "Valor": f"{eq_nuevo['Q_eq']} u."})
                 tabla_datos.append({"Variable": "Gasto estatal estimado", "Valor": f"${round(monto_subsidio * eq_nuevo['Q_eq'], 2)}"})
                 
-            elif tipo_intervencion == "Cuotas de Producción":
+            elif tipo_intervencion == "Cuotas de producción":  # <-- CORREGIDO AQUÍ
                 tabla_datos.append({"Variable": "Límite establecido", "Valor": f"{valor_cuota} u."})
                 tabla_datos.append({"Variable": "Precio que paga el consumidor", "Valor": f"${eq_nuevo['P_c']}"})
                 tabla_datos.append({"Variable": "Precio que recibe el productor", "Valor": f"${eq_nuevo['P_p']}"})
@@ -289,12 +288,10 @@ if datos_validos:
             st.table(tabla_datos)
 
         with col_graf_int:
-            # Gráfico dinámico interactivo de intervenciones
             p_max_g = float(a/b) if b > 0 else 100.0
             p_arr = np.linspace(0, p_max_g, 100)
             
             fig2 = go.Figure()
-            # Curvas base invariantes
             fig2.add_trace(go.Scatter(x=np.clip(a - b*p_arr, 0, None), y=p_arr, mode='lines', name='Demanda base', line=dict(color='blue', dash='solid')))
             fig2.add_trace(go.Scatter(x=np.clip(c + d*p_arr, 0, None), y=p_arr, mode='lines', name='Oferta base', line=dict(color='orange', dash='solid')))
             
@@ -313,16 +310,13 @@ if datos_validos:
                     fig2.add_trace(go.Scatter(x=[qd_pt, qo_pt], y=[p_min_val, p_min_val], mode='markers+lines', name='Brecha de excedente', line=dict(color='purple', width=4)))
             
             elif tipo_intervencion == "Impuestos":
-                # Graficar desplazamiento visual según incidencia legal
                 if tipo_imp == "Vendedores":
-                    qd_new = np.clip(eq_nuevo['a_ef'] - eq_nuevo['b_ef']*p_arr, 0, None)
                     qo_new = np.clip(eq_nuevo['c_ef'] + eq_nuevo['d_ef']*p_arr, 0, None)
                     fig2.add_trace(go.Scatter(x=qo_new, y=p_arr, mode='lines', name='Oferta con impuesto', line=dict(color='darkorange', dash='dot')))
                 else:
                     qd_new = np.clip(eq_nuevo['a_ef'] - eq_nuevo['b_ef']*p_arr, 0, None)
                     fig2.add_trace(go.Scatter(x=qd_new, y=p_arr, mode='lines', name='Demanda con impuesto', line=dict(color='darkblue', dash='dot')))
                 
-                # Sombreado de recaudación impositiva
                 fig2.add_trace(go.Scatter(x=[0, eq_nuevo['Q_eq'], eq_nuevo['Q_eq'], 0], y=[eq_nuevo['P_p'], eq_nuevo['P_p'], eq_nuevo['P_c'], eq_nuevo['P_c']],
                                           fill="toself", name="Recaudación fiscal", fillcolor="rgba(0,128,0,0.20)", mode='none'))
                 
@@ -330,12 +324,12 @@ if datos_validos:
                 qo_new = np.clip(eq_nuevo['c_ef'] + eq_nuevo['d_ef']*p_arr, 0, None)
                 fig2.add_trace(go.Scatter(x=qo_new, y=p_arr, mode='lines', name='Oferta subsidiada', line=dict(color='green', dash='dot')))
                 
-            elif tipo_intervencion == "Cuotas de production" and eq_nuevo['cuota_activa']:
+            elif tipo_intervencion == "Cuotas de producción" and eq_nuevo['cuota_activa']:  # <-- CORREGIDO AQUÍ
                 fig2.add_vline(x=valor_cuota, line_dash="dash", line_color="black", annotation_text="Cuota máxima")
                 fig2.add_trace(go.Scatter(x=[valor_cuota, valor_cuota], y=[eq_nuevo['P_p'], eq_nuevo['P_c']], mode='markers+lines', name='Renta de la cuota', line=dict(color='black', width=3)))
 
             fig2.update_layout(title=f"Visualización de efectos: {tipo_intervencion}", xaxis_title="Cantidad", yaxis_title="Precio",
-                              xaxis=dict(range=[0, float(a * 1.1)]), yaxis=dict(range=[0, float(p_max_g * 1.1)]))
+                               xaxis=dict(range=[0, float(a * 1.1)]), yaxis=dict(range=[0, float(p_max_g * 1.1)]))
             st.plotly_chart(fig2, use_container_width=True)
 
 # --- CÓMO EJECUTAR EL SIMULADOR ---
