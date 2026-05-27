@@ -6,12 +6,12 @@ import numpy as np
 st.set_page_config(page_title="Simulador de mercado - Economía –", layout="wide")
 st.title("📊 Simulador de mercado e intervenciones del estado")
 st.caption("Economía – Ingeniería Informática - UNSTA")
-st.subheader("""
-Integrantes:
-ANTÚNEZ RUIZ HUIDOBRO, Facundo
-BRAHIN, Federico Tomás
-GORDILLO TOLEDO, Rodrigo Gabriel
-MATOS VILLALBA, Luis Humberto
+st.markdown("""
+### Integrantes:
+* ANTÚNEZ RUIZ HUIDOBRO, Facundo
+* BRAHIN, Federico Tomás
+* GORDILLO TOLEDO, Rodrigo Gabriel
+* MATOS VILLALBA, Luis Humberto
 """)
 
 # --- FUNCIONES AUXILIARES DE CÁLCULO ---
