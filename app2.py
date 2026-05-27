@@ -74,7 +74,7 @@ a, b, c, d = 0.0, 0.0, 0.0, 0.0
 datos_validos = False
 
 if opcion_entrada == "Opción A: Forma algebraica":
-    st.sidebar.markdown("**Demand:** $Q_d = a - bP$")
+    st.sidebar.markdown("**Demanda:** $Q_d = a - bP$")
     a = st.sidebar.number_input("Intercepto demanda (a)", value=100.0, step=10.0)
     b = st.sidebar.number_input("Pendiente demanda (b)", value=2.0, step=0.5, min_value=0.01)
     
