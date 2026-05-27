@@ -6,7 +6,13 @@ import numpy as np
 st.set_page_config(page_title="Simulador de mercado - Economía –", layout="wide")
 st.title("📊 Simulador de mercado e intervenciones del estado")
 st.caption("Economía – Ingeniería Informática - UNSTA")
-st.subheader("Integrantes: Antúnez Ruiz Huidobro, Facundo – Brahin, Federico Tomás – Gordillo Toledo, Rodrigo Gabriel – Matos Villalba, Luis Humberto")
+st.subheader("""
+Integrantes:
+ANTÚNEZ RUIZ HUIDOBRO, Facundo
+BRAHIN, Federico Tomás
+GORDILLO TOLEDO, Rodrigo Gabriel
+MATOS VILLALBA, Luis Humberto
+""")
 
 # --- FUNCIONES AUXILIARES DE CÁLCULO ---
 def resolver_mercado(a, b, c, d, impuesto=0, tipo_impuesto="Ninguno", subsidio=0, cuota=None):
