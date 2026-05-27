@@ -259,36 +259,17 @@ if datos_validos:
                 else:
                     tabla_datos.append({"Variable": "Situación de mercado", "Valor": "No vinculante (Precio regulado abajo del equilibrio)"})
             
-elif tipo_intervencion == "Impuestos":
-    # 1. Identificar correctamente los precios según quién pague el impuesto
-    if tipo_imp == "Vendedores":
-        # P_eq del mercado es lo que paga el comprador. El vendedor se queda con eso menos el impuesto.
-        p_c_real = eq_nuevo['P_eq']
-        p_p_real = p_c_real - monto_impuesto
-    else:
-        # P_eq del mercado es lo que recibe el productor. El comprador paga eso más el impuesto.
-        p_p_real = eq_nuevo['P_eq']
-        p_c_real = p_p_real + monto_impuesto
-
-    # 2. Calcular la recaudación con la cantidad nueva
-    recaudacion = monto_impuesto * eq_nuevo['Q_eq']
-    
-    # 3. Las incidencias miden la diferencia contra el equilibrio original (en valor absoluto)
-    inc_comprador = p_c_real - eq_base['P_eq']
-    inc_vendedor = eq_base['P_eq'] - p_p_real
-    
-    # 4. Forzamos el redondeo para evitar decimales extraños de Python
-    inc_comprador = round(inc_comprador, 2)
-    inc_vendedor = round(inc_vendedor, 2)
-
-    # 5. Guardar en la tabla de datos utilizando las variables reales corregidas
-    tabla_datos.append({"Variable": "Nuevo precio comprador (Pc)", "Valor": f"${round(p_c_real, 2)}"})
-    tabla_datos.append({"Variable": "Nuevo precio productor (Pp)", "Valor": f"${round(p_p_real, 2)}"})
-    tabla_datos.append({"Variable": "Nueva cantidad mercado", "Valor": f"{eq_nuevo['Q_eq']} u."})
-    tabla_datos.append({"Variable": "Recaudación fiscal total", "Valor": f"${round(recaudacion, 2)}"})
-    tabla_datos.append({"Variable": "Incidencia al comprador/u.", "Valor": f"${inc_comprador}"})
-    tabla_datos.append({"Variable": "Incidencia al vendedor/u.", "Valor": f"${inc_vendedor}"})
-    tabla_datos.append({"Variable": "Suma de incidencias (Comprobación)", "Valor": f"${round(inc_comprador + inc_vendedor, 2)}"})
+            elif tipo_intervencion == "Impuestos":
+                recaudacion = monto_impuesto * eq_nuevo['Q_eq']
+                inc_comprador = eq_nuevo['P_c'] - eq_base['P_eq']
+                inc_vendedor = eq_base['P_eq'] - eq_nuevo['P_p']
+                
+                tabla_datos.append({"Variable": "Nuevo precio consumidor (Pc)", "Valor": f"${eq_nuevo['P_c']}"})
+                tabla_datos.append({"Variable": "Nuevo precio productor (Pp)", "Valor": f"${eq_nuevo['P_p']}"})
+                tabla_datos.append({"Variable": "Nueva cantidad mercado", "Valor": f"{eq_nuevo['Q_eq']} u."})
+                tabla_datos.append({"Variable": "Recaudación fiscal total", "Valor": f"${round(recaudacion, 2)}"})
+                tabla_datos.append({"Variable": "Incidencia al comprador/u.", "Valor": f"${round(inc_comprador, 2)}"})
+                tabla_datos.append({"Variable": "Incidencia al vendedor/u.", "Valor": f"${round(inc_vendedor, 2)}"})
                 
             elif tipo_intervencion == "Subsidios":
                 tabla_datos.append({"Variable": "Nuevo precio de mercado", "Valor": f"${eq_nuevo['P_eq']}"})
